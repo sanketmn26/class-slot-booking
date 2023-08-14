@@ -135,7 +135,7 @@ const Home = () => {
                 name="email"
                 onChange={handleChange}
                 value={loginData.email}
-                label="* Email"
+                label="Email"
                 sx={{
                   gridColumn: "span 4",
                 }}
@@ -148,7 +148,7 @@ const Home = () => {
                 name="password"
                 onChange={handleChange}
                 value={loginData.password}
-                label="* Password"
+                label="Password"
                 sx={{
                   marginY: "1rem",
                   gridColumn: "span 4",
