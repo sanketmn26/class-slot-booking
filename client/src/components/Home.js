@@ -12,11 +12,15 @@ import {
   InputLabel,
   FormControl,
   Typography,
+  CircularProgress,
 } from "@mui/material";
 
 const Home = () => {
   const navigate = useNavigate();
   const { user, setUser } = useContext(UserContext);
+
+  // loading state
+  const [loading, setLoading] = useState(false);
 
   //   state for error
   const [error, setError] = useState(false);
@@ -49,6 +53,7 @@ const Home = () => {
   //   function to handle login
   const login = async (event) => {
     event.preventDefault();
+    setLoading(true);
     let data;
     await axios
       // .post(`http://localhost:5001/login`, {
@@ -70,6 +75,7 @@ const Home = () => {
       setUser(data);
       navigate("/dashboard");
     }
+    setLoading(false);
   };
 
   //   function to handle registration
@@ -100,106 +106,129 @@ const Home = () => {
     <>
       {/* if user wants to login then render this section */}
       {pageType === "login" && (
-        <Box
-          id="login-box"
-          width="50%"
-          p="2rem"
-          m="2rem auto"
-          borderRadius="1.5rem"
-          sx={{ boxShadow: "0px 1px 15px #858585" }}
-        >
-          <Typography
-            fontWeight="700"
-            variant="h4"
-            sx={{ textAlign: "center", mb: "1.5rem" }}
-          >
-            Login
-          </Typography>
-          {error && (
-            <p
-              id="error"
-              style={{
-                color: "red",
-                marginBottom: "10px",
-                textAlign: "center",
+        <>
+          {loading && (
+            <Box
+              id="loader"
+              sx={{
+                marginLeft: "auto",
+                marginRight: "auto",
+                left: "0",
+                right: "0",
+                width: "100%",
+                height: "90%",
+                zIndex: "1000",
+                position: "absolute",
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "center",
+                background: "rgba(192,192,192,0.5)",
               }}
             >
-              Invalid username / password
-            </p>
-          )}
-          <form onSubmit={login}>
-            <Box display="grid">
-              {/* Email */}
-              <TextField
-                type="email"
-                name="email"
-                onChange={handleChange}
-                value={loginData.email}
-                label="Email"
-                sx={{
-                  gridColumn: "span 4",
-                }}
-                required
-              />
-
-              {/* Password */}
-              <TextField
-                type="password"
-                name="password"
-                onChange={handleChange}
-                value={loginData.password}
-                label="Password"
-                sx={{
-                  marginY: "1rem",
-                  gridColumn: "span 4",
-                }}
-                required
-              />
-
-              {/* Select Login As student/Teacher */}
-              <FormControl sx={{ gridColumn: "span 4" }}>
-                <InputLabel id="demo-simple-select-label">I am</InputLabel>
-                <Select
-                  label="I am"
-                  labelId="demo-simple-select-label"
-                  name="type"
-                  onChange={handleChange}
-                  value={loginData.type}
-                  required
-                >
-                  <MenuItem value="student">Student</MenuItem>
-                  <MenuItem value="teacher">Teacher</MenuItem>
-                </Select>
-
-                {/* login Button */}
-                <Button
-                  fullWidth
-                  type="submit"
-                  variant="contained"
-                  sx={{ marginY: "1rem" }}
-                >
-                  Login
-                </Button>
-              </FormControl>
+              <CircularProgress />
             </Box>
-          </form>
-
-          <Typography
-            onClick={() => {
-              setPageType("register");
-            }}
-            sx={{
-              width: "100px",
-              color: "#002884",
-              textDecoration: "underline",
-              "&:hover": {
-                cursor: "pointer",
-              },
-            }}
+          )}
+          <Box
+            id="login-box"
+            width="50%"
+            p="2rem"
+            m="2rem auto"
+            borderRadius="1.5rem"
+            sx={{ boxShadow: "0px 1px 15px #858585" }}
           >
-            Register here
-          </Typography>
-        </Box>
+            <Typography
+              fontWeight="700"
+              variant="h4"
+              sx={{ textAlign: "center", mb: "1.5rem" }}
+            >
+              Login
+            </Typography>
+            {error && (
+              <p
+                id="error"
+                style={{
+                  color: "red",
+                  marginBottom: "10px",
+                  textAlign: "center",
+                }}
+              >
+                Invalid username / password
+              </p>
+            )}
+            <form onSubmit={login}>
+              <Box display="grid">
+                {/* Email */}
+                <TextField
+                  type="email"
+                  name="email"
+                  onChange={handleChange}
+                  value={loginData.email}
+                  label="Email"
+                  sx={{
+                    gridColumn: "span 4",
+                  }}
+                  required
+                />
+
+                {/* Password */}
+                <TextField
+                  type="password"
+                  name="password"
+                  onChange={handleChange}
+                  value={loginData.password}
+                  label="Password"
+                  sx={{
+                    marginY: "1rem",
+                    gridColumn: "span 4",
+                  }}
+                  required
+                />
+
+                {/* Select Login As student/Teacher */}
+                <FormControl sx={{ gridColumn: "span 4" }}>
+                  <InputLabel id="demo-simple-select-label">I am</InputLabel>
+                  <Select
+                    label="I am"
+                    labelId="demo-simple-select-label"
+                    name="type"
+                    onChange={handleChange}
+                    value={loginData.type}
+                    required
+                  >
+                    <MenuItem value="student">Student</MenuItem>
+                    <MenuItem value="teacher">Teacher</MenuItem>
+                  </Select>
+
+                  {/* login Button */}
+                  <Button
+                    fullWidth
+                    type="submit"
+                    variant="contained"
+                    sx={{ marginY: "1rem" }}
+                  >
+                    Login
+                  </Button>
+                </FormControl>
+              </Box>
+            </form>
+
+            <Typography
+              onClick={() => {
+                setPageType("register");
+              }}
+              sx={{
+                width: "100px",
+                color: "#002884",
+                textDecoration: "underline",
+                "&:hover": {
+                  cursor: "pointer",
+                },
+              }}
+            >
+              Register here
+            </Typography>
+          </Box>
+        </>
       )}
 
       {/* if user wants to register then render this section */}
