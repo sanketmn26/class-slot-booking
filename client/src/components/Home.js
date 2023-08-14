@@ -20,7 +20,7 @@ const Home = () => {
   const { user, setUser } = useContext(UserContext);
 
   // loading state
-  const [loading, setLoading] = useState(false);
+  const [loading, setLoading] = useState(true);
 
   //   state for error
   const [error, setError] = useState(false);
