@@ -24,7 +24,7 @@ export const register = async (req, res) => {
 export const login = async (req, res) => {
   try {
     const { email, password, type } = req.body;
-    const user = await User.findOne({ email: email });
+    const user = await User.findOne({ email: email, type: type });
 
     if (!user) {
       return res.status(400).json({ message: "User doesn't exist!" });
@@ -39,4 +39,3 @@ export const login = async (req, res) => {
     console.log(err);
   }
 };
-
