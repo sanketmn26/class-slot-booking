@@ -40,7 +40,8 @@ const Dashboard = () => {
   const createEvent = async () => {
     console.log(event);
     await axios
-      .post(`http://localhost:5001/event`, {
+      // .post(`http://localhost:5001/event`, {
+      .post(`https://class-slot-book.onrender.com/event`, {
         name: String(event.name),
         subject: String(event.subject),
         timeFrom: String(event.timeFrom),
@@ -62,7 +63,10 @@ const Dashboard = () => {
   const teacherEvents = async () => {
     let data;
     await axios
-      .get("http://localhost:5001/events", { params: { name: event.name } })
+      // .get("http://localhost:5001/events", {
+      .get("https://class-slot-book.onrender.com/events", {
+        params: { name: event.name },
+      })
       .then(
         (res) => {
           data = res.data;
@@ -76,7 +80,8 @@ const Dashboard = () => {
   const studentEvents = async () => {
     let data;
     await axios
-      .get("http://localhost:5001/events", {
+      // .get("http://localhost:5001/events", {
+      .get("https://class-slot-book.onrender.com/events", {
         params: { subject: event.subject },
       })
       .then(

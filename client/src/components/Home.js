@@ -51,7 +51,8 @@ const Home = () => {
     event.preventDefault();
     let data;
     await axios
-      .post(`http://localhost:5001/login`, {
+      // .post(`http://localhost:5001/login`, {
+      .post(`https://class-slot-book.onrender.com/login`, {
         email: String(loginData.email),
         password: String(loginData.password),
         type: String(loginData.type),
@@ -75,7 +76,8 @@ const Home = () => {
   const register = async (event) => {
     event.preventDefault();
     await axios
-      .post(`http://localhost:5001/register`, {
+      // .post(`http://localhost:5001/register`, {
+      .post(`https://class-slot-book.onrender.com/register`, {
         name: String(regData.name),
         email: String(regData.email),
         password: String(regData.password),
